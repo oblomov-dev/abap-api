@@ -1,7 +1,6 @@
 # abapless-abap-layer
+<br>
 
-🚧 _Under Construction_ 🏗️
-<br><br>
 **How to write apps running on every abap stack? How to serve a release &amp; version independent ABAP layer?**
 <br><br>
 Snippets from [Steampuncification](https://github.com/heliconialabs/steampunkification) served as a class
