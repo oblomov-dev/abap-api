@@ -82,9 +82,15 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
+CLASS Z2UI5_CL_STMPNCFCTN_API IMPLEMENTATION.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>CONV_DECODE_X_BASE64
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] VAL                            TYPE        STRING
+* | [<-()] RESULT                         TYPE        XSTRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD conv_decode_x_base64.
 
     TRY.
@@ -109,6 +115,12 @@ CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
   ENDMETHOD.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>CONV_ENCODE_X_BASE64
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] VAL                            TYPE        XSTRING
+* | [<-()] RESULT                         TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD conv_encode_x_base64.
 
     TRY.
@@ -133,6 +145,12 @@ CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
   ENDMETHOD.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>CONV_GET_STRING_BY_XSTRING
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] VAL                            TYPE        XSTRING
+* | [<-()] RESULT                         TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD conv_get_string_by_xstring.
 
     DATA conv TYPE REF TO object.
@@ -166,6 +184,12 @@ CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
   ENDMETHOD.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>CONV_GET_XSTRING_BY_STRING
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] VAL                            TYPE        STRING
+* | [<-()] RESULT                         TYPE        XSTRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD conv_get_xstring_by_string.
 
     DATA conv TYPE REF TO object.
@@ -199,85 +223,12 @@ CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD source_get_method.
-
-    DATA object TYPE REF TO object.
-    FIELD-SYMBOLS <any> TYPE any.
-    DATA lt_source TYPE string_table.
-    DATA lt_string TYPE string_table.
-
-    TRY.
-
-        DATA(lv_class)  = to_upper( iv_classname ).
-        DATA(lv_method) = to_upper( iv_methodname ).
-
-        CALL METHOD ('XCO_CP_ABAP')=>('CLASS')
-          EXPORTING
-            iv_name  = lv_class
-          RECEIVING
-            ro_class = object.
-
-        ASSIGN ('OBJECT->IF_XCO_AO_CLASS~IMPLEMENTATION') TO <any>.
-        ASSERT sy-subrc = 0.
-        object = <any>.
-
-        CALL METHOD object->('IF_XCO_CLAS_IMPLEMENTATION~METHOD')
-          EXPORTING
-            iv_name   = lv_method
-          RECEIVING
-            ro_method = object.
-
-        CALL METHOD object->('IF_XCO_CLAS_I_METHOD~CONTENT')
-          RECEIVING
-            ro_content = object.
-
-        CALL METHOD object->('IF_XCO_CLAS_I_METHOD_CONTENT~GET_SOURCE')
-          RECEIVING
-            rt_source = result.
-
-      CATCH cx_sy_dyn_call_error.
-
-        DATA(lv_name) = 'CL_OO_FACTORY'.
-        CALL METHOD (lv_name)=>('CREATE_INSTANCE')
-          RECEIVING
-            result = object.
-
-        CALL METHOD object->('IF_OO_CLIF_SOURCE_FACTORY~CREATE_CLIF_SOURCE')
-          EXPORTING
-            clif_name = lv_class
-          RECEIVING
-            result    = object.
-
-        CALL METHOD object->('IF_OO_CLIF_SOURCE~GET_SOURCE')
-          IMPORTING
-            source = lt_source.
-
-        DATA(lv_check_method) = abap_false.
-        LOOP AT lt_source INTO DATA(lv_source).
-          DATA(lv_source_upper) = to_upper( lv_source ).
-
-          IF lv_source_upper CS `ENDMETHOD`.
-            lv_check_method = abap_false.
-          ENDIF.
-
-          IF lv_source_upper CS `METHOD ` && lv_method.
-            lv_check_method = abap_true.
-            CONTINUE.
-          ENDIF.
-
-          IF lv_check_method = abap_true.
-            INSERT lv_source INTO TABLE lt_string.
-          ENDIF.
-
-        ENDLOOP.
-
-    ENDTRY.
-
-    result = lt_string.
-
-  ENDMETHOD.
-
-
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>RTTI_GET_CLASSES_IMPL_INTF
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] VAL                            TYPE        CLIKE
+* | [<-()] RESULT                         TYPE        TT_CLASSES
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD rtti_get_classes_impl_intf.
 
     DATA obj TYPE REF TO object.
@@ -377,6 +328,12 @@ CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
   ENDMETHOD.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>RTTI_GET_DATA_ELEMENT_TEXTS
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_DATA_ELEMENT_NAME            TYPE        STRING
+* | [<-()] RESULT                         TYPE        TY_DATA_ELEMENT_TEXTS
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD rtti_get_data_element_texts.
 
     DATA:
@@ -475,6 +432,97 @@ CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
   ENDMETHOD.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>SOURCE_GET_METHOD
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] IV_CLASSNAME                   TYPE        CLIKE
+* | [--->] IV_METHODNAME                  TYPE        CLIKE
+* | [<-()] RESULT                         TYPE        STRING_TABLE
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  METHOD source_get_method.
+
+    DATA object TYPE REF TO object.
+    FIELD-SYMBOLS <any> TYPE any.
+    DATA lt_source TYPE string_table.
+    DATA lt_string TYPE string_table.
+
+    TRY.
+
+        DATA(lv_class)  = to_upper( iv_classname ).
+        DATA(lv_method) = to_upper( iv_methodname ).
+
+        CALL METHOD ('XCO_CP_ABAP')=>('CLASS')
+          EXPORTING
+            iv_name  = lv_class
+          RECEIVING
+            ro_class = object.
+
+        ASSIGN ('OBJECT->IF_XCO_AO_CLASS~IMPLEMENTATION') TO <any>.
+        ASSERT sy-subrc = 0.
+        object = <any>.
+
+        CALL METHOD object->('IF_XCO_CLAS_IMPLEMENTATION~METHOD')
+          EXPORTING
+            iv_name   = lv_method
+          RECEIVING
+            ro_method = object.
+
+        CALL METHOD object->('IF_XCO_CLAS_I_METHOD~CONTENT')
+          RECEIVING
+            ro_content = object.
+
+        CALL METHOD object->('IF_XCO_CLAS_I_METHOD_CONTENT~GET_SOURCE')
+          RECEIVING
+            rt_source = result.
+
+      CATCH cx_sy_dyn_call_error.
+
+        DATA(lv_name) = 'CL_OO_FACTORY'.
+        CALL METHOD (lv_name)=>('CREATE_INSTANCE')
+          RECEIVING
+            result = object.
+
+        CALL METHOD object->('IF_OO_CLIF_SOURCE_FACTORY~CREATE_CLIF_SOURCE')
+          EXPORTING
+            clif_name = lv_class
+          RECEIVING
+            result    = object.
+
+        CALL METHOD object->('IF_OO_CLIF_SOURCE~GET_SOURCE')
+          IMPORTING
+            source = lt_source.
+
+        DATA(lv_check_method) = abap_false.
+        LOOP AT lt_source INTO DATA(lv_source).
+          DATA(lv_source_upper) = to_upper( lv_source ).
+
+          IF lv_source_upper CS `ENDMETHOD`.
+            lv_check_method = abap_false.
+          ENDIF.
+
+          IF lv_source_upper CS `METHOD ` && lv_method.
+            lv_check_method = abap_true.
+            CONTINUE.
+          ENDIF.
+
+          IF lv_check_method = abap_true.
+            INSERT lv_source INTO TABLE lt_string.
+          ENDIF.
+
+        ENDLOOP.
+
+    ENDTRY.
+
+    result = lt_string.
+
+  ENDMETHOD.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>UUID_GET_C22
+* +-------------------------------------------------------------------------------------------------+
+* | [<-()] RESULT                         TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD uuid_get_c22.
 
     DATA uuid TYPE c LENGTH 22.
@@ -522,6 +570,11 @@ CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
   ENDMETHOD.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>UUID_GET_C32
+* +-------------------------------------------------------------------------------------------------+
+* | [<-()] RESULT                         TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD uuid_get_c32.
     DATA uuid TYPE c LENGTH 32.
 
@@ -551,15 +604,22 @@ CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
   ENDMETHOD.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_STMPNCFCTN_API=>XCO_GET_CLASS_DESCRIPTION
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLASSNAME                    TYPE        CLIKE
+* | [<-()] RESULT                         TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD xco_get_class_description.
 
-    DATA:
-      obj     TYPE REF TO object,
-      content TYPE REF TO object.
+    DATA obj     TYPE REF TO object.
+    DATA content TYPE REF TO object.
+    DATA lv_classname type c length 30.
 
+    lv_classname = i_classname.
     CALL METHOD ('XCO_CP_ABAP')=>('CLASS')
       EXPORTING
-        iv_name  = i_classname
+        iv_name  = lv_classname
       RECEIVING
         ro_class = obj.
 
@@ -572,5 +632,4 @@ CLASS z2ui5_cl_stmpncfctn_api IMPLEMENTATION.
         rv_short_description = result.
 
   ENDMETHOD.
-
 ENDCLASS.
