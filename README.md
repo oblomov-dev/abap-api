@@ -25,5 +25,5 @@ Utility Functions like GUIDs, RTTI, Messages etc.
 ### Brainstorming
 <img width="600" alt="image" src="https://github.com/oblomov-dev/abapAPI/assets/102328295/95273ee4-a020-4a57-9b37-00dda5789ea3">
 <br>
-https://excalidraw.com/#json=nhsJgnMYyE6iO5E1Gkdf-,ijLrTpXgWPBcE6ube7Y6FQ
+[link](https://excalidraw.com/#json=nhsJgnMYyE6iO5E1Gkdf-,ijLrTpXgWPBcE6ube7Y6FQ)
 <img width="1857" alt="image" src="https://github.com/oblomov-dev/abapless-abap/assets/102328295/f4b89dfc-c08f-44eb-8837-7f0b560adf9f">
