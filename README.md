@@ -10,7 +10,7 @@ Snippets from [Steampuncification](https://github.com/heliconialabs/steampunkifi
 #### Features:
 * Hides language version differences between ABAP Cloud and Standard ABAP
 * Conceals release-dependent disparities from ABAP v7.02 to ABAP Cloud
-* Runs on all ABAP stacks, including open-abap
+* Runs on all ABAP stacks, including open-abap (wip)
 * Simplifies SAP APIs to class-based methods
 
 #### Compatibility:
