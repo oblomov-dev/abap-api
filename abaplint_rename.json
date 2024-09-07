@@ -14,7 +14,7 @@
         {
           "type": "CLAS|INTF|TABL",
           "oldName": "z2ui5_(.*)",
-          "newName": "zabap_api_$1"
+          "newName": "z$1"
         }
       ]
     },
