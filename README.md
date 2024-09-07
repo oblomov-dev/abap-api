@@ -23,6 +23,6 @@ Snippets from [Steampuncification](https://github.com/heliconialabs/steampunkifi
 #### Function Scope:
 Utility Functions like GUIDs, RTTI, Messages etc.
 
-### Idea
-<img width="600" alt="image" src="https://github.com/oblomov-dev/abapAPI/assets/102328295/95273ee4-a020-4a57-9b37-00dda5789ea3">
+#### Idea
+<img width="500" alt="image" src="https://github.com/oblomov-dev/abapAPI/assets/102328295/95273ee4-a020-4a57-9b37-00dda5789ea3">
 <br>
