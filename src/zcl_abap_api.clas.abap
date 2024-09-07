@@ -1,4 +1,4 @@
-CLASS zabap_api_cl_abap_api DEFINITION
+CLASS zcl_abap_api DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
@@ -181,7 +181,7 @@ ENDCLASS.
 
 
 
-CLASS zabap_api_cl_abap_api IMPLEMENTATION.
+CLASS zcl_abap_api IMPLEMENTATION.
 
   METHOD context_check_abap_cloud.
 
