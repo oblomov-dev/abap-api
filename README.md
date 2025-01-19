@@ -1,7 +1,5 @@
 # abap-api
 
-<br>
-
 #### Features:
 * Hides language version differences between ABAP Cloud and Standard ABAP
 * Hides release-dependent differences from ABAP v7.02 to ABAP Cloud
