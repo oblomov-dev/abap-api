@@ -6,7 +6,6 @@ Snippets from [**Steampuncification**](https://github.com/heliconialabs/steampun
 #### Features:
 * Hides language version differences between ABAP Cloud and Standard ABAP
 * Hides release-dependent differences from ABAP v7.02 to ABAP Cloud
-* Runs on all ABAP stacks, including open-abap (wip)
 * Simplifies SAP APIs to class-based methods
 
 #### Compatibility:
@@ -14,7 +13,6 @@ Snippets from [**Steampuncification**](https://github.com/heliconialabs/steampun
 * S/4 Public Cloud (ABAP for Cloud)
 * S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
 * R/3 NetWeaver AS ABAP 7.02 or higher (Standard ABAP)
-* open-abap
 
 #### Function Scope:
 Utility Functions like GUIDs, RTTI, Messages etc.
