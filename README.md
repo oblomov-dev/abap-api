@@ -1,6 +1,5 @@
 # abap-api
 
-Snippets from [**Steampuncification**](https://github.com/heliconialabs/steampunkification) served as a class
 <br>
 
 #### Features:
